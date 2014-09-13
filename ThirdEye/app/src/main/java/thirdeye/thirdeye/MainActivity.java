@@ -9,12 +9,14 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import java.io.File;
 import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
@@ -22,6 +24,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -93,22 +98,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
                 }
                 return AdapterView.INVALID_POSITION;
             }
-
-            public void getInformation(){
-                try {
-                    HttpResponse<JsonNode> response = Unirest.post("https://camfind.p.mashape.com/image_requests")
-                            .header("X-Mashape-Key", "ShUTf8SqtjmshKYbArXXl2gL320Dp1cR03VjsnQpi8obslPzd1")
-                            .field("image_request[language]", "en")
-                            .field("image_request[locale]", "en_US")
-                            .field("image_request[remote_image_url]", "http://upload.wikimedia.org/wikipedia/en/2/2d/Mashape_logo.png")
-                            .asJson();
-                    String token = response.getBody().getObject().getString("token");
-                    Log.d(TAG,response.getBody().toString());
-                } catch (UnirestException e) {
-                    e.printStackTrace();
-                }
-
-            }
         });
         // Handle the TAP event.
         mCardScroller.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,9 +117,49 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 
         //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //startActivityForResult(intent, 1);
+    }
+    private class PhotoAsyncTask extends AsyncTask<String, Void, JSONObject>{
+        @Override
+        protected JSONObject doInBackground(String... strings) {
+            try {
+                HttpResponse<JsonNode> response1 = Unirest.post("https://camfind.p.mashape.com/image_requests")
+                        .header("X-Mashape-Key", "ShUTf8SqtjmshKYbArXXl2gL320Dp1cR03VjsnQpi8obslPzd1")
+                        .field("image_request[language]", "en")
+                        .field("image_request[locale]", "en_US")
+                        .field("image_request[image]", new File(strings[0]))
+                        .asJson();
+                String token = response1.getBody().getObject().getString("token");
+                String url = "https://camfind.p.mashape.com/image_responses/"+token;
+                Log.i("MainActivity", "URL: " + url);
+                String status = "not completed";
+                HttpResponse<JsonNode> response2 = null;
+                while(status.equals("not completed")) {
+                    long millis = System.currentTimeMillis();
+                    response2 = Unirest.get(url)
+                            .header("X-Mashape-Key", "ShUTf8SqtjmshKYbArXXl2gL320Dp1cR03VjsnQpi8obslPzd1")
+                            .asJson();
+                    status = response2.getBody().getObject().getString("status");
+                    Log.i("MainActivity", "JSONBody: " + response2.getBody());
+                    Thread.sleep(1000 - millis % 1000);
+                }
+                return response2.getBody().getObject();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
 
-
-
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+            try {
+                mTts.speak(jsonObject.get("name").toString(), TextToSpeech.QUEUE_FLUSH, null);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -163,7 +192,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
     public void onInit(int i) {
         Log.i("MainActivity", "Works: " + i);
         mTts.setLanguage(Locale.US);
-        mTts.speak("Hello world", TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
