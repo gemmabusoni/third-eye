@@ -94,9 +94,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
                 return AdapterView.INVALID_POSITION;
             }
 
-            public void capturePhoto()
-            {
-
             public void getInformation(){
                 try {
                     HttpResponse<JsonNode> response = Unirest.post("https://camfind.p.mashape.com/image_requests")
