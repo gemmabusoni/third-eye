@@ -10,17 +10,22 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Camera;
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -38,7 +43,7 @@ import org.json.JSONObject;
  * and use a {@link com.google.android.glass.touchpad.GestureDetector}.
  * @see <a href="https://developers.google.com/glass/develop/gdk/touch">GDK Developer Guide</a>
  */
-public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
+public class MainActivity extends Activity implements TextToSpeech.OnInitListener, Camera.AutoFocusCallback,Camera.ShutterCallback,Camera.PictureCallback{
 
     /** {@link CardScrollView} to use as the main content view. */
     private CardScrollView mCardScroller;
@@ -74,6 +79,10 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         super.onCreate(bundle);
 
         //mView = buildView();
+
+        /* All the camera interaction is here */
+        snapPicture();
+
         mCardScroller = new CardScrollView(this);
         mCardScroller.setAdapter(new CardScrollAdapter() {
             @Override
@@ -118,6 +127,25 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //startActivityForResult(intent, 1);
     }
+
+    @Override
+    public void onAutoFocus(boolean b, Camera camera) {
+        //camera.takePicture(this);
+        return;
+    }
+
+    @Override
+    public void onShutter() {
+        /* This is where we put shutter sound */
+        return;
+    }
+
+    @Override
+    public void onPictureTaken(byte[] bytes, Camera camera) {
+        /* Callback interface used to supply image data from a photo capture. */
+        return;
+    }
+
     private class PhotoAsyncTask extends AsyncTask<String, Void, JSONObject>{
         @Override
         protected JSONObject doInBackground(String... strings) {
@@ -162,6 +190,25 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             }
         }
     }
+
+    /* Camera stuff */
+
+    protected void snapPicture(){
+        Camera cam = Camera.open();
+        Log.i("MainActivity", "Camera params: " + cam.getParameters());
+
+        SurfaceHolder holder = new SurfaceView(this).getHolder();
+        cam.startPreview();
+        //cam.autoFocus(this);
+        try {
+            cam.setPreviewDisplay(holder);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //////////////////////////////
 
     @Override
     protected void onResume() {
