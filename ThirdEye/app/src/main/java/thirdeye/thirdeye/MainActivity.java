@@ -38,8 +38,10 @@ public class MainActivity extends Activity {
 
         mView = buildView();
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 1);
+        /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 1); */
+
+
 
         mCardScroller = new CardScrollView(this);
         mCardScroller.setAdapter(new CardScrollAdapter() {
@@ -64,6 +66,10 @@ public class MainActivity extends Activity {
                     return 0;
                 }
                 return AdapterView.INVALID_POSITION;
+            }
+
+            public int capturePhoto(){
+                
             }
         });
         // Handle the TAP event.
