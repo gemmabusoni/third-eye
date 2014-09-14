@@ -13,16 +13,20 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Locale;
 
 import com.squareup.okhttp.RequestBody;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
@@ -40,6 +44,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -276,15 +281,40 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 
     /* Camera stuff */
 
-    protected void snapPicture(){
-
+    protected void snapPicture() {
+        try {
             Log.i("MainActivity", "" + Camera.getNumberOfCameras());
             Log.i("MainActivity", "New debug");
             Log.i("MainActivity", "Camera params: " + cam.getParameters().toString());
 
             SurfaceHolder holder = mSurfaceView.getHolder();
 
+//            Log.i("MainActivity", "registerBuffer");
+
             holder.addCallback(this);
+
+            Process process = Runtime.getRuntime().exec("logcat -d");
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+
+            String strLine = null, tmp;
+
+            while ((tmp = bufferedReader.readLine()) != null)
+            {
+                strLine = tmp;
+            }
+
+            String lastLine = strLine;
+            if(lastLine.contains("registerBuffer")){
+                Context context = getApplicationContext();
+                Intent mStartActivity = new Intent(context, MainActivity.class);
+                int mPendingIntentId = 123456;
+                PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                System.exit(0);
+            }
+
             Log.i("MainActivity", "Surface holder done");
             Log.i("MainActivity", "Set preview display done");
             Log.i("MainActivity", "Start preview done");
@@ -292,6 +322,9 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             //cam.stopPreview();
 
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //////////////////////////////
