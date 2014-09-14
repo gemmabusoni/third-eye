@@ -218,6 +218,12 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
                 String status = "not completed";
                 HttpResponse<JsonNode> response2 = null;
                 int count = 0;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        findViewById(R.id.progressContainer).setVisibility(View.VISIBLE);
+                    }
+                });
                 while(status.equals("not completed")) {
                     if(count == 20){
                         mTts.speak("This image was not recognized", TextToSpeech.QUEUE_FLUSH, null);
@@ -233,6 +239,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
                             .asJson();
                     status = response2.getBody().getObject().getString("status");
                     Log.i("MainActivity", "JSONBody: " + response2.getBody());
+
+
                     Thread.sleep(1000 - millis % 1000);
                     count++;
                 }

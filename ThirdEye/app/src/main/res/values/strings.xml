@@ -4,5 +4,6 @@
     <string name="app_name">Third Eye</string>
     <string name="title_activity_main">ThirdEyeActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="loading">loading...</string>
 
 </resources>
