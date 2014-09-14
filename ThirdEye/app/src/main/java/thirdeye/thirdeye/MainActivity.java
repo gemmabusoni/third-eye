@@ -305,6 +305,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             }
 
             String lastLine = strLine;
+            Log.i("MainActivity", "last line: "+lastLine);
             if(lastLine.contains("registerBuffer")){
                 Context context = getApplicationContext();
                 Intent mStartActivity = new Intent(context, MainActivity.class);
