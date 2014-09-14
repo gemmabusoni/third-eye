@@ -265,11 +265,20 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             }
         }
         @Override
-        protected void onPostExecute(JSONObject jsonObject) {
+        protected void onPostExecute(final JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
             try {
-                mTts.speak(jsonObject.get("name").toString(), TextToSpeech.QUEUE_FLUSH, null);
-                Log.i("MainActivity","should have read "+jsonObject.get("name").toString());
+                final String textToSpeak = jsonObject.get("name").toString();
+                mTts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                Log.i("MainActivity","should have read "+textToSpeak);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
+                        ((TextView) findViewById(R.id.textview)).setText(textToSpeak);
+
+                    }
+                });
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (NullPointerException e){
@@ -338,6 +347,9 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 //            mCardScroller = new CardScrollView(this);
 //        }
 //        mCardScroller.activate();
+        findViewById(R.id.progressContainer).setVisibility(View.GONE);
+        ((TextView) findViewById(R.id.textview)).setText(getString(R.string.loading));
+
     }
 
     @Override
