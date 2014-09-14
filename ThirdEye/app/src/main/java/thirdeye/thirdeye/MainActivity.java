@@ -96,10 +96,10 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 
         /* All the camera interaction is here */
 
-        android.provider.Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 600000);
+        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 600000);
 
         setContentView(R.layout.surface);
-        mSurfaceView = (SurfaceView) findViewById(R.id.surface);
+        mSurfaceView = (SurfaceView) findViewById(R.id.surf);
 
         cam = Camera.open();
         snapPicture();
