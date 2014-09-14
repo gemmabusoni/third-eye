@@ -10,3 +10,7 @@ Now introducing Third Eye, an innovative computer vision system designed for Goo
 Specifically, Third Eye integrates with a computer vision system to perform fast object and pattern recognition. We developed it using the Google Glass Development Kit (GDK) with the visually impaired in mind; a user can interact with the intuitive and easy-to-use interface with just their voice. 
 
 Check out the Third Eye website or demo video. Created by Rajat Bhageria, Ben Sandler, and Joe Cappadona--all CS students at UPenn--during the Fall 2014 PennApps. We believe Third Eye will change the world forever. Help us make this vision a reality.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+http://thirdeyeglass.me | https://www.youtube.com/watch?v=uqAZocUf3oQ
