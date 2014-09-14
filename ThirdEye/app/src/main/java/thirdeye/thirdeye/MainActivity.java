@@ -97,11 +97,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         setContentView(R.layout.surface);
         mSurfaceView = (SurfaceView) findViewById(R.id.surface);
 
-
         cam = Camera.open();
         snapPicture();
-
-
 
         mCardScroller = new CardScrollView(this);
         mCardScroller.setAdapter(new CardScrollAdapter() {
@@ -144,10 +141,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         Intent checkIntent = new Intent();
         checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
-
-
-        //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //startActivityForResult(intent, 1);
     }
 
     @Override
@@ -172,6 +165,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             fos.close();
             Log.i("MainActivity", "the length of the file is:"+bytes.length);
             PhotoAsyncTask task = new PhotoAsyncTask();
+            //TODO:COMMENT THIS BACK
             task.execute(photo.getPath());
         }
         catch (FileNotFoundException e) {
@@ -216,22 +210,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         @Override
         protected JSONObject doInBackground(String... strings) {
             try {
-
-                /*
-                HashMap<String, String> jsonMap = new HashMap<String, String>();
-                jsonMap.put("image_request[language]","en");
-                jsonMap.put("image_request[locale]", "en_US");
-                jsonMap.put("image_request[image]", strings[0]);
-
-                Gson gson = new Gson();
-
-                RequestBody body = RequestBody.create("application/json; charset=utf-8", json);
-                Request request = new Request.Builder()
-                        .url("https://camfind.p.mashape.com/image_requests")
-                        .header("X-Mashape-Key", "ShUTf8SqtjmshKYbArXXl2gL320Dp1cR03VjsnQpi8obslPzd1")
-                        .post()
-                        .build();
-*/
                 HttpResponse<JsonNode> response1 = Unirest.post("https://camfind.p.mashape.com/image_requests")
                         .header("X-Mashape-Key", "ShUTf8SqtjmshKYbArXXl2gL320Dp1cR03VjsnQpi8obslPzd1")
                         .field("image_request[language]", "en")
@@ -245,8 +223,12 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
                 HttpResponse<JsonNode> response2 = null;
                 int count = 0;
                 while(status.equals("not completed")) {
+                    if(count == 20){
+                        mTts.speak("This image was not recognized", TextToSpeech.QUEUE_FLUSH, null);
+                    }
+
                     long millis = System.currentTimeMillis();
-                    if(count % 5 == 0){
+                    if(count % 3 == 0){
                         mTts.speak("Processing", TextToSpeech.QUEUE_FLUSH, null);
                     }
                     response2 = Unirest.get(url)
@@ -280,6 +262,9 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
                 Log.i("MainActivity","should have read "+jsonObject.get("name").toString());
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (NullPointerException e){
+                mTts.speak("Internet not working. Please check your connection and try again.", TextToSpeech.QUEUE_FLUSH, null);
+                e.printStackTrace();
             }
         }
     }
@@ -293,6 +278,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             Log.i("MainActivity", "Camera params: " + cam.getParameters().toString());
 
             SurfaceHolder holder = mSurfaceView.getHolder();
+
             holder.addCallback(this);
             Log.i("MainActivity", "Surface holder done");
             Log.i("MainActivity", "Set preview display done");
