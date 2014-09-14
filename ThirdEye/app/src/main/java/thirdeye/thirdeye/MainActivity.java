@@ -31,6 +31,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -69,6 +70,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
     @Override
     protected void onActivityResult(
             int requestCode, int resultCode, Intent data) {
+        Log.i(TAG,"onActivityResult"+resultCode);
         if (requestCode == MY_DATA_CHECK_CODE) {
             if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
                 // success, create the TTS instance
@@ -93,6 +95,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         //mView = buildView();
 
         /* All the camera interaction is here */
+
+        android.provider.Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 600000);
 
         setContentView(R.layout.surface);
         mSurfaceView = (SurfaceView) findViewById(R.id.surface);
@@ -126,18 +130,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             }
         });
 
-        /*
-        // Handle the TAP event.
-        mCardScroller.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Plays disallowed sound to indicate that TAP actions are not supported.
-                AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                am.playSoundEffect(Sounds.DISALLOWED);
-            }
-        });
-        setContentView(mCardScroller); */
-
         Intent checkIntent = new Intent();
         checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
@@ -165,7 +157,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             fos.close();
             Log.i("MainActivity", "the length of the file is:"+bytes.length);
             PhotoAsyncTask task = new PhotoAsyncTask();
-            //TODO:COMMENT THIS BACK
             task.execute(photo.getPath());
         }
         catch (FileNotFoundException e) {
@@ -183,6 +174,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
+        Log.i("MainActivity", "surfaceHolder: " + surfaceHolder);
+        Log.i("MainActivity", "cam: " + cam);
         if(surfaceHolder.getSurface() == null || cam == null) {
             return;
         }
@@ -196,12 +189,15 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             cam.startPreview();
             cam.takePicture(this,null,null,this);
         } catch (IOException e) {
+            Log.e("MainActivity","problem setting up camera",e);
         }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         surfaceHolder.removeCallback(this);
+        cam.lock();
+        cam.stopPreview();
         cam.release();
         surfaceHolder = null;
     }
@@ -225,6 +221,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
                 while(status.equals("not completed")) {
                     if(count == 20){
                         mTts.speak("This image was not recognized", TextToSpeech.QUEUE_FLUSH, null);
+                        break;
                     }
 
                     long millis = System.currentTimeMillis();
