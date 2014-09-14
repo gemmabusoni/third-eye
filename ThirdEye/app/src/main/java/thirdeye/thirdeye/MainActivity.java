@@ -291,50 +291,19 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
     /* Camera stuff */
 
     protected void snapPicture() {
-        try {
-            Log.i("MainActivity", "" + Camera.getNumberOfCameras());
-            Log.i("MainActivity", "New debug");
-            Log.i("MainActivity", "Camera params: " + cam.getParameters().toString());
+        Log.i("MainActivity", "" + Camera.getNumberOfCameras());
+        Log.i("MainActivity", "New debug");
+        Log.i("MainActivity", "Camera params: " + cam.getParameters().toString());
 
-            SurfaceHolder holder = mSurfaceView.getHolder();
+        SurfaceHolder holder = mSurfaceView.getHolder();
+        holder.addCallback(this);
 
-//            Log.i("MainActivity", "registerBuffer");
-
-            holder.addCallback(this);
-
-            Process process = Runtime.getRuntime().exec("logcat -d");
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-
-            String strLine = null, tmp;
-
-            while ((tmp = bufferedReader.readLine()) != null)
-            {
-                strLine = tmp;
-            }
-
-            String lastLine = strLine;
-            Log.i("MainActivity", "last line: "+lastLine);
-            if(lastLine.contains("registerBuffer")){
-                Context context = getApplicationContext();
-                Intent mStartActivity = new Intent(context, MainActivity.class);
-                int mPendingIntentId = 123456;
-                PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-                System.exit(0);
-            }
-
-            Log.i("MainActivity", "Surface holder done");
-            Log.i("MainActivity", "Set preview display done");
-            Log.i("MainActivity", "Start preview done");
+        Log.i("MainActivity", "Surface holder done");
+        Log.i("MainActivity", "Set preview display done");
+        Log.i("MainActivity", "Start preview done");
 
             //cam.stopPreview();
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     //////////////////////////////
