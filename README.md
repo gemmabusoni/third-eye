@@ -14,3 +14,17 @@ Check out the Third Eye website or demo video. Created by Rajat Bhageria, Ben Sa
 ----------------------------------------------------------------------------------------------------------------------------
 
 http://thirdeyeglass.me | https://www.youtube.com/watch?v=uqAZocUf3oQ
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Biographies of the Founders (All freshman CS students at Penn):
+
+Rajat Bhageria is the Founder and CEO of CafeMocha.org--an online social networking platform that allows young students to publish, share, and gain recognition for their creative writing around the world. Additionally, he is the author of "What High School Didn't Teach Me." Find his full portfolio at RajatBhageria.com. Email him at rajat@cafemocha.org.
+
+Joe Cappadona is currently pursuing iOS development, where he hopes to publish applications to aid in music education. Email him at josephcappadona27@gmail.com.
+
+Ben Sandler is a passionate technologist and software developer. He has worked as a software developer at startups and on several independent software projects. He is also a competitive competition programmer having multiple won awards from Intel, Microsoft, and IBM. View his website at BenSandler.me. Email Ben at ben1sandler@gmail.com.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
