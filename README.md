@@ -5,11 +5,16 @@ What did you do yesterday? Think about how different your day would have been wi
 
 What if a piece of software could tell you exactly what’s in front of you with one simple command? There would be no way that anyone could take advantage of a visually impaired person. Sound impossible? 
 
-Now introducing Third Eye, an innovative computer vision system designed for Google Glass. Simply say, “Okay Glass, recognize this” and Third Eye will analyze what’s in front of you and say what it is out loud. Third Eye can recognize almost all objects including money, landmarks, medicines, household objects, and regular text. 
+Now introducing Third Eye, an innovative computer vision system designed for Google Glass. Simply say, “Okay Glass, recognize this” and Third Eye will analyze what’s in front of you and say what it is out loud. Third Eye can recognize almost any object including money, landmarks, medicines, household objects, and regular text. 
 
-Specifically, Third Eye integrates with a computer vision system to perform fast object and pattern recognition. We developed it using the Google Glass Development Kit (GDK) with the visually impaired in mind; a user can interact with the intuitive and easy-to-use interface with just their voice. 
+Specifically, Third Eye integrates with a computer vision system to perform fast object and pattern recognition. We developed it using the Google Glass Development Kit (GDK) with the visually impaired in mind; users can interact with the intuitive and easy-to-use interface with just their voices. 
 
 Check out the Third Eye website or demo video. Created by Rajat Bhageria, Ben Sandler, and Joe Cappadona--all CS students at UPenn--during the Fall 2014 PennApps. We believe Third Eye will change the world forever. Help us make this vision a reality.
+
+####Awards Won:####
+
+*Finalist. Top 10 team out of around 1500 Hackers and 500 teams. Only finalist team with all freshman students.
+*Most Intuitive Interface Award presented by WillowTree.
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -17,13 +22,13 @@ http://thirdeyeglass.me | https://www.youtube.com/watch?v=uqAZocUf3oQ
 
 ----------------------------------------------------------------------------------------------------------------------------
 
-Biographies of the Founders (All freshman CS students at Penn):
+Biographies of the Founders (All freshman Computer Science students at Penn):
+
+Ben Sandler is passionate about using technology to improve the world and is a talented software developer. He has worked as a software developer at startups and on several independent software projects. He loves to compete in programming competitons, and he has won awards from Intel, Microsoft, and IBM. Visit his website at bensandler.me. Email Ben at ben1sandler@gmail.com.
 
 Rajat Bhageria is the Founder and CEO of CafeMocha.org--an online social networking platform that allows young students to publish, share, and gain recognition for their creative writing around the world. Additionally, he is the author of "What High School Didn't Teach Me." Find his full portfolio at RajatBhageria.com. Email him at rajat@cafemocha.org.
 
 Joe Cappadona is currently pursuing iOS development, where he hopes to publish applications to aid in music education. Email him at josephcappadona27@gmail.com.
-
-Ben Sandler is a passionate technologist and software developer. He has worked as a software developer at startups and on several independent software projects. He is also a competitive competition programmer having multiple won awards from Intel, Microsoft, and IBM. View his website at BenSandler.me. Email Ben at ben1sandler@gmail.com.
 
 ----------------------------------------------------------------------------------------------------------------------------
 
