@@ -13,7 +13,7 @@ Check out the Third Eye website or demo video. Created by Rajat Bhageria, Ben Sa
 
 ####Awards Won:####
 
-* Finalist. Top 10 team out of around 1500 Hackers and 500 teams. Only finalist team with all freshman students.
+* Finalist at PennApps, World's Largest Hackathon. Top 10 team out of around 1500 Hackers and 500 teams. Only finalist team with all freshman students.
 * Most Intuitive Interface Award presented by WillowTree.
 
 ----------------------------------------------------------------------------------------------------------------------------
