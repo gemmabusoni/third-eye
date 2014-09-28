@@ -24,11 +24,12 @@ http://thirdeyeglass.me | https://www.youtube.com/watch?v=uqAZocUf3oQ
 
 Biographies of the Founders (All freshman Computer Science students at Penn):
 
-Ben Sandler is a talented software developer who is passionate about using technology to improve the world. He has worked as a software developer at startups and on several independent software projects. He loves to compete in programming competitions where he has won awards from Intel, Microsoft, IBM, and PennApps. Visit his website at http://bensandler.me. Email Ben at ben1sandler@gmail.com.
-
 Rajat Bhageria is the Founder and CEO of CafeMocha.org--an online social networking platform that allows young students to publish, share, and gain recognition for their creative writing around the world. Additionally, he is the author of "What High School Didn't Teach Me." Find his full portfolio at http://RajatBhageria.com. Email him at rajat@cafemocha.org.
 
 Joe Cappadona is currently pursuing iOS development, where he hopes to publish applications to aid in music education. Email him at josephcappadona27@gmail.com.
+
+Ben Sandler is a talented software developer who is passionate about using technology to improve the world. He has worked as a software developer at startups and on several independent software projects. He loves to compete in programming competitions where he has won awards from Intel, Microsoft, IBM, and PennApps. Visit his website at http://bensandler.me. Email Ben at ben1sandler@gmail.com.
+
 
 ----------------------------------------------------------------------------------------------------------------------------
 
